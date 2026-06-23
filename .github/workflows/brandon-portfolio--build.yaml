@@ -14,7 +14,7 @@ on:
         type: string
 
 env:
-  DEPLOYMENT_FOLDER: public
+  DEPLOYMENT_FOLDER: .next
 
 jobs:
 # Please do not rename this job
@@ -38,7 +38,10 @@ jobs:
           SITE_URL: ${{ inputs.site-url }}
         run: |
           npm ci
+          npm run dev
           npm run build
+          npm run start
+          npm run lint
 
 # Please do not touch the following action
       - name: Store deployment content
@@ -46,7 +49,7 @@ jobs:
         with:
           api-key: ${{ secrets.IONOS_API_KEY }}
           service-host: api-us.ionos.space
-          project-id: e553b5cc-3653-4418-af64-39a8fb137313
+          project-id: 9d2ca0bd-9ce9-4930-9fa3-acc39519316c
           branch-id: ${{ inputs.branch-id }}
           version: ${{ github.sha }}
           folder: ${{ env.DEPLOYMENT_FOLDER }}
